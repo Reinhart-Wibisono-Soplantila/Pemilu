@@ -1,0 +1,1129 @@
+body {
+    background-color: #fefefe;
+}
+
+.button {
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.submit {
+    background-color: #00538e;
+    font-size: 15px;
+    border-color: #00538e;
+    border-radius: 10px;
+    width: 100px;
+}
+
+.input-form .button,
+.input-form .button1 {
+    width: 100px;
+    padding: 10px;
+    margin-left: 25px;
+}
+
+.button:disabled {
+    opacity: 0.5;
+}
+
+.hide {
+    display: none;
+}
+
+.loader {
+    display: none;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+.loading {
+    border: 2px solid #ccc;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 5px solid #efefef;
+    border-top: 5px solid #1d74b3;
+    animation: spin 1s infinite ease-in;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* STYLE NAVBAR */
+
+.navbar {
+    background-color: #1d74b3;
+    color: white;
+}
+
+.navbar-header img {
+    height: 40px;
+    margin-top: 5px;
+    margin-left: -15px;
+    padding-bottom: 8px;
+    color: white;
+}
+
+.navbar-header {
+    font-size: 10px;
+    color: #fefefe;
+    padding-left: 10px;
+}
+
+.navbar a {
+    font-size: 15px;
+    padding-left: 5px;
+}
+
+.log-in {
+    padding-top: 15px;
+    padding-right: 15px;
+}
+
+.log-out img {
+    height: 30px;
+}
+
+ul li {
+    height: 56px;
+    margin: 0 auto;
+    padding: 0 0 0 16px;
+}
+
+
+/* FORM REGIS */
+
+.regis-form .container {
+    padding-top: 10vh;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    margin-bottom: 10vh;
+    margin-top: -10vh;
+}
+
+.icon-kandidat {
+    margin-top: -1vh;
+    width: 280px;
+    margin-left: -30px;
+}
+
+.icon-kandidat img {
+    margin-top: -40px;
+    width: 200px;
+    margin-left: 45px;
+}
+
+.icon-kandidat h1 {
+    font-family: 'Bebas Neue', cursive;
+    color: #1d74b3;
+}
+
+.icon-kandidat .who {
+    margin-left: 88px;
+    font-size: 50px;
+}
+
+.icon-kandidat .next {
+    margin-top: -85px;
+    margin-left: 160px;
+    font-size: 50px;
+    margin-bottom: 10vh;
+}
+
+.regis-form-group {
+    margin: auto;
+    background: none;
+    width: 300px;
+}
+
+.regis-form .card {
+    border: none;
+}
+
+.form-group input {
+    justify-content: center;
+    margin-bottom: 1vh;
+    border-radius: 10px;
+    background-color: #dddddd;
+}
+
+.regis-form-group legend {
+    text-align: center;
+    font-size: 16px;
+}
+
+.form-group label {
+    font-size: 15px;
+}
+
+.regis-form button {
+    background-color: #00538e;
+    font-size: 15px;
+    margin-top: 10px;
+    border-color: #00538e;
+    border-radius: 10px;
+    width: 100px;
+}
+
+
+/* FORM LOGIN */
+
+.login-container {
+    height: 90vh;
+    width: 100%;
+}
+
+.login-form {
+    padding: 10px;
+    margin: auto;
+    justify-content: center;
+}
+
+.login-form input {
+    border-radius: 10px;
+    background-color: #dddddd;
+}
+
+.login-form button {
+    font-size: 15px;
+    padding-top: 10px;
+    margin-top: 10px;
+    width: 100px;
+    background-color: #0E5180;
+    border-color: #00538e;
+    border-radius: 10px;
+}
+
+.update-data-pemilih .kotak {
+    background-color: #b5b5b5;
+    width: 75px;
+    height: 75px;
+    margin: 1%;
+    border-radius: 15px;
+}
+
+.update-data-pemilih p {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+section {
+    margin-top: 100px;
+}
+
+section.update-data-pemilih {
+    margin: 50px auto;
+}
+
+.ketua1 select,
+.ketua2 select,
+.update select {
+    font-size: small;
+    float: right;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.ketua1 h2,
+.ketua2 h2,
+.update-data-pemilih h2,
+.selamat h2,
+.update-pemilih h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.selamat {
+    margin-bottom: 100px;
+}
+
+.selamat .foto1,
+.selamat .foto2,
+.selamat .topik-ketum {
+    width: 100px;
+    height: 100px;
+    margin: 0 5%;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
+.selamat .foto1 {
+    background-color: #b5b5b5;
+}
+
+.selamat .foto2 {
+    background-color: #6397bd;
+}
+
+.selamat img {
+    height: 80%;
+    margin: 0 15%;
+    padding: 10px;
+}
+
+.selamat p {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.selamat .ket-foto {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    margin: 5px 5%;
+}
+
+.selamat .ket-foto p {
+    color: black;
+    padding: 0;
+}
+
+
+/*Menu Pemilihan Utama*/
+
+.menu-pilihan {
+    margin-top: 50px;
+}
+
+.menu-pilihan form {
+    margin-bottom: 0px;
+    margin-top: 0;
+    width: 50%;
+    padding: 0;
+}
+
+.menu-pilihan form button {
+    width: 100%;
+    height: 400px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.menu-pilihan button:hover {
+    background-color: #b5b5b5;
+    color: #b5b5b5;
+}
+
+.menu-pilihan .foto1,
+.menu-pilihan .foto2 {
+    width: 100%;
+    height: 300px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.menu-pilihan img {
+    height: 40%;
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+
+.menu-pilihan p {
+    color: #1D74B3;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 0;
+}
+
+.update h2 {
+    font-size: 15px;
+    margin: 0 auto;
+}
+
+.update .foto-update,
+.update .chart-update {
+    display: block;
+    margin-top: 50px;
+    width: 100%;
+}
+
+.update .foto1,
+.update .foto2 {
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    padding-top: 5px;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.update .foto-update {
+    margin: auto;
+    width: fit-content
+}
+
+.update .foto1 {
+    background-color: #b5b5b5;
+}
+
+.update .foto2 {
+    background-color: #6397bd;
+}
+
+.update img {
+    height: 80%;
+    margin: 0 15%;
+    padding: auto;
+}
+
+.update p {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 5px;
+}
+
+.update .foto1 h1,
+.update .foto2 h1 {
+    color: white;
+    position: absolute;
+    font-family: sans-serif;
+    margin-left: 9px;
+    margin-top: -9px;
+    font-size: 60px;
+}
+
+.kotak h1 {
+    font-size: 25px;
+    padding-bottom: -5vh;
+    margin-top: 5px;
+}
+
+.kotak h3 {
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.kotak h1,
+.kotak h3 {
+    color: #fefefe;
+    text-align: center;
+}
+
+
+/*Menu Pemilihan Ketum*/
+
+.pilih-ketum {
+    margin-bottom: 100px;
+    margin-top: 110px;
+    width: 100%;
+}
+
+.pilih-ketum button {
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: #b5b5b5;
+    color: #b5b5b5;
+    border-radius: 10px;
+    width: 100px;
+}
+
+.pilih-ketum button:hover {
+    background-color: #d4d4d4;
+    color: #d4d4d4;
+}
+
+.pilih-ketum .foto1,
+.pilih-ketum .foto2 {
+    width: 130px;
+    height: 130px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-left: -28px;
+}
+
+.pilih-ketum .topik-ketum {
+    width: 70px;
+    height: 130px;
+    margin: 0 1.5%;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #b5b5b5;
+}
+
+.pilih-ketum img {
+    height: 60%;
+    margin: 0 25%;
+    padding: 10px;
+    text-align: center;
+    margin-top: 23px;
+}
+
+.pilih-ketum .foto1 p,
+.pilih-ketum .foto2 p {
+    color: #1D74B3;
+    text-align: center;
+    font-weight: bold;
+    font-size: 7px;
+    margin-top: 2px;
+}
+
+.pilih-ketum .topik-ketum p {
+    color: #1D74B3;
+    text-align: center;
+    font-weight: bold;
+    font-size: 7px;
+    margin-top: 50px;
+}
+
+.pilih-ketum .foto1 h1,
+.pilih-ketum .foto2 h1 {
+    font-size: 60px;
+    font-family: sans-serif;
+    color: #1D74B3;
+    position: absolute;
+    font-family: sans-serif;
+    margin-left: 28px;
+    margin-top: 20px;
+}
+
+.pilih-ketum button,
+.menu-pilihan button {
+    border-color: transparent;
+}
+
+.pilih-ketum .btn {
+    background-color: #dddddd;
+}
+
+.menu-pilihan button {
+    background-color: transparent;
+}
+
+
+/* FORM INPUT */
+
+.input-form .container {
+    padding-top: 10vh;
+    justify-content: center;
+    display: flex;
+    flex-flow: wrap;
+    margin-bottom: 10vh;
+    margin-top: -10vh;
+}
+
+.input-form h1 {
+    font-size: 20px;
+    margin-top: 10vh;
+    text-align: center;
+}
+
+.input-form h4 {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 5vh;
+}
+
+.next {
+    margin-top: 50px;
+}
+
+.input-form .card {
+    border: none;
+}
+
+.input-form .form-group {
+    margin: auto;
+    width: 250px;
+}
+
+.input-form label {
+    font-size: 12px;
+}
+
+.input-form input {
+    justify-content: center;
+    border-radius: 10px;
+    background-color: #dddddd;
+    width: 250px;
+}
+
+.input-form button {
+    margin-top: 10px;
+    border-color: #00538e;
+    border-radius: 10px;
+    background-color: #00538e;
+    margin-bottom: 5vh;
+    font-size: 12px;
+    margin-left: 25px;
+}
+
+.input-form .log {
+    width: 80px;
+    margin-left: 25px;
+}
+
+.back button {
+    border-color: #00538e;
+    border-radius: 10px;
+    background-color: #00538e;
+    font-size: 12px;
+    float: right;
+}
+
+.back1 button {
+    border-color: #00538e;
+    border-radius: 10px;
+    background-color: #00538e;
+    font-size: 12px;
+}
+
+.ketude-form-group {
+    width: 300px;
+}
+
+
+/* Halaman Utama Admin */
+
+.halaman-utama-admin .container {
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 10vh;
+    margin-top: 100px;
+    width: 100%;
+}
+
+.halaman-utama-admin .btn {
+    width: 300px;
+    height: 70px;
+    border-radius: 15px;
+    margin-bottom: 5vh;
+    font-size: 18px;
+    color: white;
+    margin: 0 25px;
+    margin-top: 10vh;
+    background-color: #00538e;
+    border-color: #00538e;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.halaman-utama-admin .btn:hover {
+    background-color: #0095ff;
+    border-color: #0095ff;
+}
+
+.update-pemilih .container {
+    background-color: whitesmoke;
+    padding: 30px 20px;
+}
+
+.update-pemilih .tabel-pemilih {
+    margin: 5% auto;
+    padding: 3%;
+    background-color: white;
+}
+
+.update-pemilih th:nth-child(1),
+.update-pemilih td:nth-child(1) {
+    width: 1%;
+}
+
+.update-pemilih th,
+.update-pemilih td {
+    border: 1px solid lightgrey;
+    font-size: 7px;
+    width: 3%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.update-pemilih th {
+    background-color: #0095ff
+}
+
+.update-pemilih tr:nth-child(odd) {
+    background-color: whitesmoke;
+}
+
+.update-pemilih tr {
+    background-color: white;
+}
+
+@media screen and (min-width: 760px) and (max-width: 1000px) {
+    .navbar-header a {
+        margin-left: 10px;
+    }
+    .navbar-header {
+        font-size: 15px;
+    }
+    .ketua1 h2,
+    .ketua2 h2,
+    .update-data-pemilih h2,
+    .selamat h2,
+    .update h2,
+    .update-pemilih h2 {
+        font-size: 25px;
+    }
+    .selamat p,
+    .update p {
+        font-size: 10px;
+    }
+    .selamat .foto1,
+    .selamat .foto2,
+    .selamat .ket-foto {
+        width: 190px;
+        height: 190px;
+        margin: 5 10%;
+    }
+    .update .foto-update,
+    .update .chart-update {
+        display: inline-block;
+    }
+    .update .foto-update {
+        width: 20%;
+        margin: 0;
+        padding-top: 40px;
+    }
+    .update .chart-update {
+        width: 70%;
+    }
+    .update .foto1,
+    .update .foto2 {
+        width: 100px;
+        height: 100px;
+        display: block;
+        padding-top: 10px;
+        margin: 20px auto;
+    }
+    .regis-form {
+        margin-bottom: -7vh;
+    }
+    .regis-form-group legend {
+        font-size: 20px;
+        margin-top: 5vh;
+        text-align: center;
+        margin-left: 30px;
+    }
+    .regis-form-group {
+        justify-content: center;
+        padding: 1px;
+        width: 400px;
+        border-color: #00538e;
+    }
+    .form-group {
+        width: 350px;
+        margin-left: 50px;
+    }
+    .form-group label {
+        font-size: 17px;
+    }
+    .regis-form button {
+        font-size: 17px;
+        background-color: #00538e;
+        margin-bottom: 1vh;
+        margin-left: 50px;
+        width: 110px;
+    }
+    .icon-kandidat {
+        margin-top: 20px;
+        margin-right: 0;
+    }
+    .icon-kandidat img {
+        width: 200px;
+        margin-top: -50px;
+    }
+    .icon-kandidat .who {
+        margin-left: 75px;
+        margin-top: 6vh;
+        font-size: 60px;
+    }
+    .icon-kandidat .next {
+        margin-top: -90px;
+        margin-left: 145px;
+        font-size: 60px;
+        margin-bottom: 1vh;
+    }
+    .login-form input {
+        width: 380px;
+    }
+    .menu-pilihan img {
+        height: 45%;
+        margin-top: 75px;
+    }
+    .menu-pilihan p {
+        font-size: 15px;
+    }
+    .pilih-ketum button {
+        border-radius: 20px;
+        width: 250px;
+    }
+    .pilih-ketum .foto1,
+    .pilih-ketum .foto2 {
+        width: 250px;
+        height: 250px;
+        border-radius: 20px;
+        margin-left: -4px;
+    }
+    .pilih-ketum .topik-ketum {
+        width: 150px;
+        height: 250px;
+        border-radius: 20px;
+    }
+    .pilih-ketum img {
+        margin-top: 15%;
+    }
+    .pilih-ketum .foto1 p,
+    .pilih-ketum .foto2 p {
+        font-size: 13px;
+        margin-top: 7px;
+    }
+    .pilih-ketum .topik-ketum p {
+        font-size: 13px;
+        margin-top: 93px;
+    }
+    .pilih-ketum .foto1 h1,
+    .pilih-ketum .foto2 h1 {
+        font-size: 150px;
+        margin-left: 32px;
+        margin-top: 4px;
+    }
+    .input-form h1 {
+        font-size: 25px;
+        text-align: center;
+    }
+    .input-form h4 {
+        text-align: center;
+        font-size: 15px;
+    }
+    .next {
+        font-size: 15px;
+    }
+    .input-form .form-group {
+        width: 380px;
+    }
+    .input-form input {
+        width: 380px;
+        border-radius: 10px;
+        background-color: #dddddd;
+        border-color: #dddddd;
+    }
+    .input-form .log {
+        width: 100px;
+        margin-left: 10px;
+    }
+    .input-form label {
+        font-size: 15px;
+    }
+    .input-form button {
+        border-color: #00538e;
+        border-radius: 10px;
+        background-color: #00538e;
+        margin-top: 2vh;
+        margin-left: 0;
+        margin-bottom: 1vh;
+        font-size: 15px;
+        float: left;
+    }
+    .input-form .button,
+    .input-form .button1 {
+        margin-left: 10px;
+    }
+    .back button {
+        font-size: 15px;
+        float: right;
+        margin-top: 8vh;
+    }
+    .back1 button {
+        font-size: 15px;
+    }
+    .ketude-form-group {
+        width: 400px;
+    }
+    .halaman-utama-admin .btn {
+        width: 450px;
+        height: 100px;
+        border-radius: 20px;
+        font-size: 22px;
+        margin-top: 10vh;
+    }
+    .update-pemilih th,
+    .update-pemilih td {
+        font-size: small;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+@media screen and (min-width: 1001px) {
+    .navbar {
+        padding: 0 0 0 16px;
+    }
+    .navbar-header img {
+        height: 40px;
+        margin: 0 0 0 -15px;
+        padding-bottom: 0;
+    }
+    .navbar-header a {
+        line-height: 56px;
+        margin-left: 10px;
+    }
+    .navbar-header {
+        font-size: 15px;
+    }
+    .name,
+    .navbar .log-in {
+        background-color: #0063aa;
+    }
+    .add {
+        background-color: #095b96;
+    }
+    .log-out {
+        background-color: #00538e;
+    }
+    .name,
+    .log-out,
+    .add,
+    .navbar .log-in {
+        padding: 15px 25px;
+    }
+    .update-data-pemilih .kotak {
+        width: 130px;
+        height: 130px;
+    }
+    .kotak h1 {
+        font-size: 40px;
+        padding-bottom: -5vh;
+        margin-top: 25px;
+    }
+    .kotak h3 {
+        font-size: 10px;
+        font-weight: bold;
+    }
+    .kotak h1,
+    .kotak h3 {
+        color: #fefefe;
+        text-align: center;
+    }
+    .menu-pilihan .foto1,
+    .menu-pilihan .foto2 {
+        height: 400px;
+    }
+    .menu-pilihan img {
+        height: 45%;
+        margin-top: 80px;
+    }
+    .menu-pilihan p {
+        font-size: 20px;
+    }
+    .pilih-ketum button {
+        border-radius: 30px;
+        width: 330px;
+    }
+    .pilih-ketum .foto2 {
+        margin-left: 0;
+    }
+    .pilih-ketum .foto1,
+    .pilih-ketum .foto2 {
+        width: 350px;
+        height: 350px;
+        border-radius: 30px;
+    }
+    .pilih-ketum .topik-ketum {
+        width: 250px;
+        height: 350px;
+        border-radius: 30px;
+    }
+    .pilih-ketum img {
+        margin-top: 70px;
+    }
+    .pilih-ketum .foto1 p,
+    .pilih-ketum .foto2 p {
+        font-size: 20px;
+        margin-top: 5px;
+    }
+    .pilih-ketum .topik-ketum p {
+        font-size: 20px;
+        margin-top: 125px;
+    }
+    .pilih-ketum .foto1 h1,
+    .pilih-ketum .foto2 h1 {
+        font-size: 220px;
+        margin-left: 40px;
+        margin-top: 15px;
+    }
+    .ketua1 h2,
+    .ketua2 h2,
+    .update-data-pemilih h2,
+    .selamat h2,
+    .update h2,
+    .update-pemilih h2 {
+        font-size: 35px;
+    }
+    .selamat p,
+    .update p {
+        font-size: small;
+    }
+    .selamat .foto1,
+    .selamat .foto2,
+    .selamat .ket-foto {
+        width: 190px;
+        height: 190px;
+        margin: 5 10%;
+    }
+    .update .foto1,
+    .update .foto2 {
+        width: 150px;
+        height: 150px;
+        padding-top: 10px;
+        display: block;
+        margin: 20px auto;
+    }
+    .update .foto-update,
+    .update .chart-update {
+        display: inline-block;
+    }
+    .update .foto-update {
+        width: 20%;
+        margin: 0;
+        padding-top: 40px;
+    }
+    .update .chart-update {
+        width: 70%;
+    }
+    .update .foto1 h1,
+    .update .foto2 h1 {
+        font-size: 100px;
+    }
+    .login-form {
+        max-width: 100%;
+        padding: 10px;
+        margin: auto;
+    }
+    .login-form input {
+        width: 380px;
+    }
+    .icon-kandidat {
+        margin-top: -1vh;
+        margin-right: 0;
+        width: 480px;
+    }
+    .icon-kandidat img {
+        margin-right: 19vh;
+        width: 250px;
+        margin-top: -55px;
+    }
+    .icon-kandidat .who {
+        font-size: 75px;
+        margin-left: 80px;
+    }
+    .icon-kandidat .next {
+        margin-top: -115px;
+        margin-left: 170px;
+        font-size: 75px;
+        margin-bottom: 5vh;
+    }
+    .regis-form .card {
+        padding: 0;
+    }
+    .regis-form-group {
+        margin-right: 50px;
+        width: 300px;
+    }
+    .form-group {
+        width: 380px;
+    }
+    .regis-form-group legend {
+        font-size: 20px;
+        margin-left: 40px;
+    }
+    .input-form h1 {
+        font-size: 30px;
+        margin-top: 15vh;
+        text-align: center;
+    }
+    .card {
+        padding: 50px;
+    }
+    .input-form h4 {
+        text-align: center;
+        font-size: 20px;
+        margin-top: 6vh;
+    }
+    .next {
+        font-size: 20px;
+    }
+    .input-form .form-group {
+        margin-bottom: 1rem;
+        width: 400px;
+    }
+    .input-form label {
+        font-size: 15px;
+    }
+    .input-form .log {
+        margin-left: 10px;
+    }
+    .input-form input {
+        width: 300px;
+        border-radius: 10px;
+        background-color: #dddddd;
+        border-color: #dddddd;
+    }
+    .input-form button {
+        margin-top: 10px;
+        border-color: #00538e;
+        border-radius: 10px;
+        background-color: #00538e;
+        margin-bottom: 10vh;
+        font-size: 15px;
+    }
+    .input-form .log {
+        width: 100px;
+        margin-left: 0;
+    }
+    .back button {
+        float: right;
+        font-size: 15px;
+    }
+    .back1 button {
+        font-size: 15px;
+    }
+    .halaman-utama-admin .btn {
+        width: 600px;
+        height: 125px;
+        border-radius: 20px;
+        font-size: 25px;
+        margin-top: 10vh;
+    }
+    .update-pemilih th,
+    .update-pemilih td {
+        font-size: smaller;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .input-form .button,
+    .input-form .button1 {
+        margin-left: 1px;
+    }
+}
