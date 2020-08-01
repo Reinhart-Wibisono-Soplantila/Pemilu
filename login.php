@@ -3,58 +3,99 @@
     require 'function.php';
 
     if (isset($_POST["LOGIN"])) {
-
-        $NIM = $_POST["NIM"];
-        $password= $_POST["password"];
         $admin="admin";
         $login="login";
-        $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
+        
+        //amankan tempat user menginput data
+        $stmt = mysqli_prepare($conn, "SELECT * FROM mahasiswa WHERE NIM= ? ");
+        mysqli_stmt_bind_param($stmt, "s", $_POST["NIM"]);
+        mysqli_execute($stmt);
+        mysqli_stmt_store_result($stmt);
 
-        //cek NIM
-        if( mysqli_num_rows($result) === 1) {
+
+        //cek NIM apakah adaatau tidak
+        if( mysqli_stmt_num_rows($stmt) === 1) {
+            $result=get_result($stmt);
+            $data = array_shift($result);
+            $NIM = $data['NIM'];
+            $result=mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
             $row = mysqli_fetch_assoc($result);
-           // cek LOGIN 
-            if($login!=$row["login"]){
-                //cek identitas
-                if($admin == $row["admin"]){
-                    //cek password
-                    if (password_verify($password, $row["password"])){
-                        // set session
-                        $_SESSION["LOGIN"] = true;
-                        $_SESSION['NIM']=$NIM;
-                        $_SESSION['admin']=true;
-                        $login = "UPDATE mahasiswa SET login='login' WHERE NIM = '$NIM'";
-                        mysqli_query($conn, $login);
-                        header("Location: presidium.php");
-                        
-                    } else {
-                        echo "<script>
-                        alert('Password Salah');
-                        </script>
-                        ";
-                    }
+
+            $pass = mysqli_query($conn, "SELECT * FROM password WHERE NIM='$NIM'");
+            $row_pass = mysqli_fetch_assoc($pass);
+            //cek apakah admin atau panitia
+            if($admin == $row["admin"]){
+                if (password_verify($_POST["password"], $row_pass["password"])){
+                    // set session
+                    $_SESSION["LOGIN"] = true;
+                    $_SESSION['NIM']=$NIM;
+                    $_SESSION['admin']=true;
+                    
+                    header("Location: presidium.php");
                 } else {
-                    //cek password
-                    if (password_verify($password, $row["password"])){
-                        // set session
-                        $_SESSION["LOGIN"] = true;
-                        $_SESSION['NIM']=$NIM;
-                        $login = "UPDATE mahasiswa SET login='login' WHERE NIM = '$NIM'";
-                        mysqli_query($conn, $login);
-                        header("Location: halamanutamapemilih.php");     
-                    } else {
-                        echo "<script>
-                        alert('Password Salah');
-                        </script>
-                        ";
-                    }
+                    echo "<script>
+                    alert('Password Salah');
+                    </script>
+                    ";
                 }
-            } else {
-                echo "<script>
-                alert('Hanya bisa Log In sekali saja');
-                </script>
-                ";
+            } elseif($row["panitia"] == "panitia"){
+                if (password_verify($_POST["password"], $row_pass["password"])){
+                    // set session
+                    $_SESSION["LOGIN"] = true;
+                    $_SESSION['NIM']=$NIM;
+                    $_SESSION['panitia']=true;
+                    
+                    header("Location: GeneratePass.php");
+                } else {
+                    echo "<script>
+                    alert('Password Salah');
+                    </script>
+                    ";
+                } 
             }
+            
+            // jika bukan admin atau panitia
+            // cek LOGIN 
+            if($admin != $row["admin"] || $row["admin"] == "panitia"){
+                    if($login!=$row["login"]){
+                        //cek password
+                        if (password_verify($_POST["password"], $row_pass["password"])){
+
+                            $tgl_sekarang=date("Y-m-d H:i:s", strtotime('+'. 6 .'hours'));  // tanggal sekarang
+                            $jam_mulai=$row_pass["jam_password"];                           // jam launching password
+                            $jangka_waktu = strtotime('+10 minutes', strtotime($jam_mulai));// jangka waktu
+                            $tgl_exp=date("Y-m-d H:i:s",$jangka_waktu);                     // tanggal expired
+                            
+                            //cek jangka waktu password
+                            if ($tgl_sekarang >=$tgl_exp ) {
+
+                                echo " <script>  alert( 'Password sudah tidak berlaku') </script>";
+                            } else {
+                                
+                                // set session
+                                $_SESSION["LOGIN"] = true;
+                                $_SESSION['NIM']=$NIM;
+                                $login = "UPDATE mahasiswa SET login='login' WHERE NIM = '$NIM'";
+                                mysqli_query($conn, $login);
+                                header("Location: halamanutamapemilih.php");     
+                            }
+                        } else {
+                            echo "<script>
+                            alert('Password Salah');
+                            </script>
+                            ";
+                        }
+                } else {
+                    echo "<script>
+                    alert('Hanya bisa Log In sekali saja');
+                    </script>
+                    ";
+                }
+            }
+                
+            
+//****************** */
+           
         } else {
             echo "<script>
             alert('NIM Tidak Terdaftar');
