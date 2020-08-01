@@ -33,24 +33,33 @@
       }
     }
 
+    // if(isset($_POST["grafik_ketude"])){
+    //     $select = $_POST["grafik_ketude"];
+    //     switch ($select) {
+    //         case 'pertama':
+    //             echo "<script> alert('grafik ketude pertama') </script>";
+    //         break;
+    //         case 'kedua':
+    //             echo "<script> alert('grafik ketude kedua') </script>";
+    //         break;
+    //     }
+        
+    // }
 
     if(isset($_POST["SUBMIT"])){
+        
         suaraketum();
         suaraketude();
-        tidakMemilih();
+        submitTidakMemilih();
+        submitMemilih();
+        memilih();
         LogOut();
     }
-
-    $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
-    $row = mysqli_fetch_assoc($result);
-    if($sudah == $row["ketum"] && $sudah == $row["ketude"]){
-        $selesai = "UPDATE mahasiswa SET submit_memilih='sudah' WHERE NIM = '$NIM'";
-        mysqli_query($conn, $selesai);
-    }
+    
 
 
     //mengambl data setiap 6 jam
-    $data_awal ="2020-07-25 20:00:00";
+    $data_awal ="2020-07-31 00:00:00";
     $loop = 16;
     $calonketude1 = [];
     $calonketude2 = [];
@@ -104,11 +113,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    
+
     <link rel="stylesheet" href="style.css">
 
     <title>WEB MMIF</title>
@@ -166,16 +176,14 @@
         </div>
     </section>
 
-
-    <center>
-        <form method="post" id="form-submit">
+    <form method="post" action="" id="form-submit">
+        <center>
             <button type='submit' class="submit btn btn-primary" name="SUBMIT">
                 <i class="loading-icon fa fa-spinner fa-spin hide"></i>
                 <span class="btn-txt">Submit</span>
             </button>
-        </form>
-    </center>
-
+        </center>
+    </form>
 
     <!-- UPDATE DATA PEMILIH -->
     <section class="update-data-pemilih">
@@ -266,11 +274,11 @@
                     </div>
                 </div>
                 <div class="chart-update">
-                    <form action="">
-                        <select name="" id="">
+                    <form action="" method="post">
+                        <select class="grafikKetum" id="">
                         <option value="" disabled selected hidden>Hari</option>
-                        <option value="">Senin</option>
-                        <option value="">Selasa</option>
+                        <option value="pertama">Pertama</option>
+                        <option value="kedua">Kedua</option>
                     </select>
                     </form>
                     <canvas id="chart2"></canvas>
@@ -335,12 +343,12 @@
                     </div>
                 </div>
                 <div class="chart-update">
-                    <form action="">
-                        <select name="" id="">
-                        <option value="" disabled selected hidden>Hari</option>
-                        <option value="">Senin</option>
-                        <option value="">Selasa</option>
-                    </select>
+                    <form action="" method="post">
+                        <select class="grafikKetude" id="">
+                            <option value="" disabled selected hidden>Hari</option>
+                            <option value="pertama">Pertama</option>
+                            <option value="kedua">Kedua</option>
+                        </select>
                     </form>
                     <canvas id="chart1"></canvas>
                 </div>   
@@ -496,6 +504,22 @@ $(document).ready(function() {
                     }
                 }
             });
+        });
+    });
+
+    //tombol hari ketude
+    $(document).ready(function(){
+        $("select.grafikKetude").change(function(){
+            var hari = $(this).children("option:selected").val();
+            alert("Kamu memilih hari - " + hari);
+        });
+    });
+
+    //tombol hari ketum
+    $(document).ready(function(){
+        $("select.grafikKetum").change(function(){
+            var hari = $(this).children("option:selected").val();
+            alert("Kamu memilih hari - " + hari);
         });
     });
 </script>
