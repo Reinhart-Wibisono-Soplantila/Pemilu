@@ -2,6 +2,17 @@
     //koneksi ke database   urutan parameter(namaHost, username, password, database)
     $conn = mysqli_connect("localhost","root", "", "mmif");
 
+    if(!isset($_SESSION["LOGIN"])){
+    //set session
+    header("Location: login.php");
+    exit;
+    }
+    if( !isset($_SESSION["admin"])){
+        //set session
+        header("Location: login.php");
+        exit;
+    }
+
     function get_result(\mysqli_stmt $statement) {
     $result = array();
     mysqli_stmt_store_result($statement);
@@ -388,33 +399,34 @@
     function suaraketude(){
         global $conn;
         $NIM=$_SESSION['NIM'];
-        $sudah='sudah';
-        if(isset($_SESSION["ketude1"])){
-            $data1=1;
-            $result = mysqli_query($conn, "SELECT NIM FROM suara_mmif");
-            while($row = mysqli_fetch_assoc($result)){
-                $dec = base64_decode($row["NIM"]);
-                $enc=base64_encode($NIM);
 
-                if($NIM==$dec) {
-                    $update1 = "UPDATE suara_mmif SET calonketude1='$data1', created_at=NOW() WHERE NIM='$enc'";
-                    mysqli_query($conn, $update1);
-                }
-            } 
-        }
-         elseif(isset($_SESSION["ketude2"])){
-            $data2=1;
-            $result = mysqli_query($conn, "SELECT NIM FROM suara_mmif");
-            while($row = mysqli_fetch_assoc($result)){
-                $dec = base64_decode($row["NIM"]);
-                $enc=base64_encode($NIM);
-                
-                if( $NIM==$dec) {
-                    $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
-                    $rows = mysqli_fetch_assoc($result);
-                    $data2=1;
-                    $update2 = "UPDATE suara_mmif SET calonketude2='$data2', created_at=NOW() WHERE NIM='$enc'";
-                    mysqli_query($conn, $update2);
+        $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
+        $row = mysqli_fetch_assoc($result);
+        if($row["ketude"]=="memilih"){
+            if(isset($_SESSION["ketude1"])){
+                $data1=1;
+                $result = mysqli_query($conn, "SELECT NIM FROM suara_mmif");
+                while($row = mysqli_fetch_assoc($result)){
+                    $dec = base64_decode($row["NIM"]);
+                    $enc=base64_encode($NIM);
+
+                    if($NIM==$dec) {
+                        $update1 = "UPDATE suara_mmif SET calonketude1='$data1', created_at=NOW() WHERE NIM='$enc'";
+                        mysqli_query($conn, $update1);
+                    }
+                } 
+            }
+            elseif(isset($_SESSION["ketude2"])){
+                $data2=1;
+                $result = mysqli_query($conn, "SELECT NIM FROM suara_mmif");
+                while($row = mysqli_fetch_assoc($result)){
+                    $dec = base64_decode($row["NIM"]);
+                    $enc=base64_encode($NIM);
+                    
+                    if( $NIM==$dec) {
+                        $update2 = "UPDATE suara_mmif SET calonketude2='$data2', created_at=NOW() WHERE NIM='$enc'";
+                        mysqli_query($conn, $update2);
+                    }
                 }
             }
         }
@@ -423,88 +435,69 @@
     function suaraketum(){
         global $conn;
         $NIM=$_SESSION['NIM'];
-        $sudah='sudah';
-        if(isset($_SESSION["ketum1"])){
-            $data1=1;
-            $result = mysqli_query($conn, "SELECT * FROM suara_mmif");
-            while($row = mysqli_fetch_assoc($result)){
-                $dec = base64_decode($row["NIM"]);
-                $enc=base64_encode($NIM);
-                if($NIM==$dec) {
-                    $update1 = "UPDATE suara_mmif SET calonketum1='$data1', created_at=NOW() WHERE NIM='$enc'";
-                    mysqli_query($conn, $update1);
-                    
-                    $update = "UPDATE mahasiswa SET ketum='sudah' WHERE NIM = '$NIM'";
-                    mysqli_query($conn, $update);
-                   
-                }
-            }
-        } elseif(isset($_SESSION["ketum2"])) {
-            $result = mysqli_query($conn, "SELECT NIM FROM suara_mmif");
-            while($row = mysqli_fetch_assoc($result)){
-                $dec = base64_decode($row["NIM"]);
-                $enc=base64_encode($NIM);
-                if($NIM==$dec) {
-                    $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
-                    $rows = mysqli_fetch_assoc($result);
-                   
-                    $data2=1;
-                    $update2 = "UPDATE suara_mmif SET calonketum2='$data2', created_at=NOW() WHERE NIM='$enc'";
-                    mysqli_query($conn, $update2);
 
-                    $update = "UPDATE mahasiswa SET ketum='sudah' WHERE NIM = '$NIM'";
-                    mysqli_query($conn, $update);
-                    
+        $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
+        $row = mysqli_fetch_assoc($result);
+        if($row["ketum"]=="memilih"){
+            if(isset($_SESSION["ketum1"])){
+                $data1=1;
+                $result = mysqli_query($conn, "SELECT * FROM suara_mmif");
+                while($row = mysqli_fetch_assoc($result)){
+                    $dec = base64_decode($row["NIM"]);
+                    $enc=base64_encode($NIM);
+                    if($NIM==$dec) {
+                        $update1 = "UPDATE suara_mmif SET calonketum1='$data1', created_at=NOW() WHERE NIM='$enc'";
+                        mysqli_query($conn, $update1);
+                    }
                 }
+            } elseif(isset($_SESSION["ketum2"])) {
+                $result = mysqli_query($conn, "SELECT NIM FROM suara_mmif");
+                while($row = mysqli_fetch_assoc($result)){
+                    $dec = base64_decode($row["NIM"]);
+                    $enc=base64_encode($NIM);
+                    if($NIM==$dec) {
+                        $data2=1;
+                        $update2 = "UPDATE suara_mmif SET calonketum2='$data2', created_at=NOW() WHERE NIM='$enc'";
+                        mysqli_query($conn, $update2);
+
+                    }
+                } 
             } 
+        }
+    }
+
+
+    function submit(){
+        global $conn;
+        $NIM=$_SESSION['NIM'];
+        $memilih='memilih';
+
+        $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
+        $row = mysqli_fetch_assoc($result);
+        if($memilih == $row["ketum"] || $memilih == $row["ketude"]){
+            $selesai = "UPDATE mahasiswa SET submit_memilih='memilih', memilih='memilih' WHERE NIM = '$NIM'";
+            mysqli_query($conn, $selesai);
+        }
+
+        if ($row["ketum"] != $memilih){
+            $tidakMemilih1 = "UPDATE mahasiswa SET ketum='tidak memilih' WHERE NIM = '$NIM'";
+            mysqli_query($conn, $tidakMemilih1);
         } 
-    }
-
-    function submitTidakMemilih(){
-        global $conn;
-        $NIM=$_SESSION['NIM'];
-        $sudah='sudah';
-
-        $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
-        $row = mysqli_fetch_assoc($result);
-
-        if($sudah != $row["ketum"] && $sudah != $row["ketude"]){
-            $tidakMemilih = "UPDATE mahasiswa SET submit_tdkMemilih='tidak memilih' WHERE NIM = '$NIM'";
-            mysqli_query($conn, $tidakMemilih);
-        } elseif ($sudah == $row["ketum"] && $sudah != $row["ketude"]){
-            $tidakMemilih = "UPDATE mahasiswa SET submit_tdkMemilih='tidak memilih' WHERE NIM = '$NIM'";
-            mysqli_query($conn, $tidakMemilih);
-        } elseif ($sudah != $row["ketum"] && $sudah == $row["ketude"]){
-            $tidakMemilih = "UPDATE mahasiswa SET submit_tdkMemilih='tidak memilih' WHERE NIM = '$NIM'";
-            mysqli_query($conn, $tidakMemilih);
-        }
-    }
-
-    function submitMemilih(){
-        global $conn;
-        $NIM=$_SESSION['NIM'];
-        $sudah='sudah';
-
-        $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
-        $row = mysqli_fetch_assoc($result);
-        if($sudah == $row["ketum"] && $sudah == $row["ketude"]){
-            $selesai = "UPDATE mahasiswa SET submit_memilih='memilih' WHERE NIM = '$NIM'";
-            mysqli_query($conn, $selesai);
-        }
-    }
-
-    function memilih(){
-        global $conn;
-        $NIM=$_SESSION['NIM'];
-        $sudah='sudah';
         
-        $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
-        $row = mysqli_fetch_assoc($result);
-        if($row["submit_memilih"]=="memilih" || $row["submit_tdkMemilih"]=="tidak memilih"){
-            $selesai = "UPDATE mahasiswa SET memilih='sudah' WHERE NIM = '$NIM'";
-            mysqli_query($conn, $selesai);
+        if ($row["ketude"] != $memilih){
+            $tidakMemilih2 = "UPDATE mahasiswa SET ketude='tidak memilih' WHERE NIM = '$NIM'";
+            mysqli_query($conn, $tidakMemilih2);
         }
     }
+
+    // function memilih(){
+    //     global $conn;
+    //     $NIM=$_SESSION['NIM'];
+    //     $sudah='sudah';
+        
+    //     $selesai = "UPDATE mahasiswa SET memilih='sudah' WHERE NIM = '$NIM'";
+    //     mysqli_query($conn, $selesai);
+    // }
 
     // function updateDataPemilih(){
     //     global $conn;
