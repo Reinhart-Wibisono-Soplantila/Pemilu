@@ -1,7 +1,23 @@
 <?php
     //koneksi ke database   urutan parameter(namaHost, username, password, database)
     $conn = mysqli_connect("localhost","root", "", "mmif");
-    
+
+    function get_result(\mysqli_stmt $statement) {
+    $result = array();
+    mysqli_stmt_store_result($statement);
+    for ($i = 0; $i < $statement->num_rows; $i++) {
+        $metadata = mysqli_stmt_result_metadata($statement);
+        $params = array();
+        while ($field = mysqli_fetch_field($metadata))
+        {
+            $params[] = &$result[$i][$field->name];
+        }
+        call_user_func_array(array($statement, 'bind_result'), $params);
+        $statement->fetch();
+    }
+    return $result;
+    }
+
     function query($query){
         global $conn;
         $result = mysqli_query($conn, $query);
@@ -12,47 +28,80 @@
         return $rows;
     }
 
-    function regis($data){
+    function generatePass($data){
         global $conn;
-        $nama = $data["nama"];
+        $nama = $data["NAMA"];
         $NIM = $data["NIM"];
-        $email_sso = $data["email_sso"];
         $password = passAcak(7);
-        // echo $password;
+
+        $result = mysqli_query($conn, "SELECT registrasi FROM mahasiswa WHERE NIM='$NIM'");
+        $regis =  mysqli_fetch_assoc($result);
+
+        // enkripsi password
+        $enkripsi = password_hash($password, PASSWORD_DEFAULT);
+        $update = "UPDATE mahasiswa SET nama = '$nama', password = '$enkripsi' WHERE NIM = '$NIM'";
+        mysqli_query($conn, $update);
+        
+        // isi database passsword
+        $db_pass = "INSERT INTO password VALUES ('', '$NIM', '$enkripsi', NOW())";
+        mysqli_query($conn, $db_pass);
 
         //enkripsi NIM
         $enk_NIM = base64_encode($NIM);
         $enc = "INSERT INTO suara_mmif VALUES ('', '$enk_NIM', '', '', '', '', '')";
         mysqli_query($conn, $enc);
-
-        //enkripsi password
-        $enkripsi = password_hash($password, PASSWORD_DEFAULT);
-        $update = "UPDATE mahasiswa SET nama = '$nama', password = '$enkripsi', email_sso = '$email_sso' WHERE NIM = '$NIM'";
-        mysqli_query($conn, $update);
-
-        //kirim email
-        ini_set( 'display_errors', 1 );
-        error_reporting( E_ALL );
-        $from = "reinhartsoplantila@gmail.com";    
-        $subject = "Password akun web pemilu";    
-        $message = "Password untuk Login ke halaman pemilu:" . $password;   
-        $headers = "From:" . $from;
-        mail($email_sso, $subject, $message, $headers);   
-        // if(mail($email_sso, $subject, $message, $headers)){
-        //     echo "  sukses  ";
-        // } else {
-        //     echo "  gagal  ";
-        // }
-        // $en_NIM=password_hash($NIM, PASSWORD_DEFAULT);
-        // $_SESSION["en_NIM"]=$en_NIM;
-        // $insert = "INSERT INTO suara_mmif values('', '$en_NIM', '', '', '', '')";
-        // mysqli_query($conn, $insert);
-
-        return mysqli_affected_rows($conn);
+        return $password;
     }
 
 
+    // function regis($data){
+    //     global $conn;
+    //     $nama = $data["nama"];
+    //     $NIM = $data["NIM"];
+    //     $email_sso = $data["email_sso"];
+    //     $password = passAcak(7);
+    //     // echo $password;
+
+    //     //enkripsi NIM
+    //     $enk_NIM = base64_encode($NIM);
+    //     $enc = "INSERT INTO suara_mmif VALUES ('', '$enk_NIM', '', '', '', '', '')";
+    //     mysqli_query($conn, $enc);
+
+    //     //enkripsi password
+    //     $enkripsi = password_hash($password, PASSWORD_DEFAULT);
+    //     $update = "UPDATE mahasiswa SET nama = '$nama', password = '$enkripsi' WHERE NIM = '$NIM'";
+    //     mysqli_query($conn, $update);
+        
+    //     // isi database passsword
+    //     $db_pass = "INSERT INTO password VALUES ('', '$NIM', '$enkripsi', NOW())";
+    //     mysqli_query($conn, $db_pass);
+
+
+    //     //kirim email
+    //     ini_set( 'display_errors', 1 );
+    //     error_reporting( E_ALL );
+    //     $from = "reinhartsoplantila@gmail.com";    
+    //     $subject = "Password akun web pemilu";    
+    //     $message = "Password untuk Login ke halaman pemilu:" . $password;   
+    //     $headers = "From:" . $from;
+    //     mail($email_sso, $subject, $message, $headers);   
+    //     // if(mail($email_sso, $subject, $message, $headers)){
+    //     //     echo "  sukses  ";
+    //     // } else {
+    //     //     echo "  gagal  ";
+    //     // }
+    //     // $en_NIM=password_hash($NIM, PASSWORD_DEFAULT);
+    //     // $_SESSION["en_NIM"]=$en_NIM;
+    //     // $insert = "INSERT INTO suara_mmif values('', '$en_NIM', '', '', '', '')";
+    //     // mysqli_query($conn, $insert);
+
+    //     return mysqli_affected_rows($conn);
+    // }
+
+
     function passAcak($panjang) {
+        global $conn;
+        global $NIM;
         $karakter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'; // password
         $string = '';
 
@@ -61,7 +110,7 @@
         $pos = rand(0, strlen($karakter)-1);
         $string .= $karakter{$pos};
         }
-        
+       
         return $string;
     }
 
@@ -317,48 +366,43 @@
     }
 
     function ketude1(){
+        echo "<script> alert('Anda Memilih Kandidat Ketua Dewan Pertama')</script>" ;  
         $_SESSION['ketude1']=true;
     }
 
     function ketude2(){
+        echo "<script> alert('Anda Memilih Kandidat Ketua Dewan Kedua')</script>" ;
         $_SESSION['ketude2']=true;
     }
 
     function ketum1(){
+        echo "<script> alert('Anda Memilih Kandidat Ketua Umum Pertama')</script>" ;
         $_SESSION['ketum1']=true;
     }
 
     function ketum2(){
+        echo "<script> alert('Anda Memilih Kandidat Ketua Umum Kedua')</script>" ;
         $_SESSION['ketum2']=true;
     }
 
     function suaraketude(){
         global $conn;
         $NIM=$_SESSION['NIM'];
+        $sudah='sudah';
         if(isset($_SESSION["ketude1"])){
             $data1=1;
             $result = mysqli_query($conn, "SELECT NIM FROM suara_mmif");
             while($row = mysqli_fetch_assoc($result)){
-                // $enk_NIM = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, base64_decode($NIM), MCRYPT_MODE_ECB));
                 $dec = base64_decode($row["NIM"]);
                 $enc=base64_encode($NIM);
 
                 if($NIM==$dec) {
-                    $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
-                    $rows = mysqli_fetch_assoc($result);
-                    if ($sudah == $rows["ketude"]){
-                        header("Location: halamanutamapemilih.php");
-                        
-                    } else {
-                        $update1 = "UPDATE suara_mmif SET calonketude1='$data1', created_at=NOW() WHERE NIM='$enc'";
-                        mysqli_query($conn, $update1);
-                        
-                        header("Location: halamanutamapemilih.php");
-                        
-                    }
+                    $update1 = "UPDATE suara_mmif SET calonketude1='$data1', created_at=NOW() WHERE NIM='$enc'";
+                    mysqli_query($conn, $update1);
                 }
             } 
-        } elseif(isset($_SESSION["ketude2"])){
+        }
+         elseif(isset($_SESSION["ketude2"])){
             $data2=1;
             $result = mysqli_query($conn, "SELECT NIM FROM suara_mmif");
             while($row = mysqli_fetch_assoc($result)){
@@ -368,17 +412,9 @@
                 if( $NIM==$dec) {
                     $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
                     $rows = mysqli_fetch_assoc($result);
-                    if ($sudah == $rows["ketude"]){
-                        header("Location: halamanutamapemilih.php");
-                        
-                    } else{
-                        $data2=1;
-                        $update2 = "UPDATE suara_mmif SET calonketude2='$data2', created_at=NOW() WHERE NIM='$enc'";
-                        mysqli_query($conn, $update2);
-
-                        header("Location: halamanutamapemilih.php");
-                           
-                    }   
+                    $data2=1;
+                    $update2 = "UPDATE suara_mmif SET calonketude2='$data2', created_at=NOW() WHERE NIM='$enc'";
+                    mysqli_query($conn, $update2);
                 }
             }
         }
@@ -387,6 +423,7 @@
     function suaraketum(){
         global $conn;
         $NIM=$_SESSION['NIM'];
+        $sudah='sudah';
         if(isset($_SESSION["ketum1"])){
             $data1=1;
             $result = mysqli_query($conn, "SELECT * FROM suara_mmif");
@@ -394,20 +431,12 @@
                 $dec = base64_decode($row["NIM"]);
                 $enc=base64_encode($NIM);
                 if($NIM==$dec) {
-                    $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
-                    $rows = mysqli_fetch_assoc($result);
-                    if ($sudah == $rows["ketum"]){
-                        header("Location: halamanutamapemilih.php");
-                        
-                    }else{
-                        $update1 = "UPDATE suara_mmif SET calonketum1='$data1', created_at=NOW() WHERE NIM='$enc'";
-                        mysqli_query($conn, $update1);
-                        
-                        $update = "UPDATE mahasiswa SET ketum='sudah' WHERE NIM = '$NIM'";
-                        mysqli_query($conn, $update);
-                        header("Location: halamanutamapemilih.php");
-                        
-                    } 
+                    $update1 = "UPDATE suara_mmif SET calonketum1='$data1', created_at=NOW() WHERE NIM='$enc'";
+                    mysqli_query($conn, $update1);
+                    
+                    $update = "UPDATE mahasiswa SET ketum='sudah' WHERE NIM = '$NIM'";
+                    mysqli_query($conn, $update);
+                   
                 }
             }
         } elseif(isset($_SESSION["ketum2"])) {
@@ -418,25 +447,20 @@
                 if($NIM==$dec) {
                     $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
                     $rows = mysqli_fetch_assoc($result);
-                    if ($sudah == $rows["ketum"]){
-                        header("Location: halamanutamapemilih.php");
-                        
-                    } else{
-                        $data2=1;
-                        $update2 = "UPDATE suara_mmif SET calonketum2='$data2', created_at=NOW() WHERE NIM='$enc'";
-                        mysqli_query($conn, $update2);
+                   
+                    $data2=1;
+                    $update2 = "UPDATE suara_mmif SET calonketum2='$data2', created_at=NOW() WHERE NIM='$enc'";
+                    mysqli_query($conn, $update2);
 
-                        $update = "UPDATE mahasiswa SET ketum='sudah' WHERE NIM = '$NIM'";
-                        mysqli_query($conn, $update);
-                        header("Location: halamanutamapemilih.php");
-                        
-                    }
+                    $update = "UPDATE mahasiswa SET ketum='sudah' WHERE NIM = '$NIM'";
+                    mysqli_query($conn, $update);
+                    
                 }
             } 
         } 
     }
 
-    function tidakMemilih(){
+    function submitTidakMemilih(){
         global $conn;
         $NIM=$_SESSION['NIM'];
         $sudah='sudah';
@@ -456,49 +480,119 @@
         }
     }
 
-    function waktu(){
+    function submitMemilih(){
         global $conn;
-        $data_awal ="2020-07-25 20:00:00";
-        $loop = 16;
-        $calonketude1 = [];
-        $calonketude2 = [];
-        $calonketum1 = [];
-        $calonketum2 = [];
-        
-        for($data=0; $data<$loop*3; $data+=1){
-            $tigajam = date('Y-m-d H:i:s', strtotime('+'.$data.'seconds',strtotime($data_awal)));
-            $calonketude1[]=mysqli_query($conn, "SELECT SUM(calonketude1) AS calonketude1 FROM suara_mmif WHERE calonketude1=1  AND created_at<='$tigajam'");
-            $calonketude2[]=mysqli_query($conn, "SELECT SUM(calonketude2) AS calonketude2 FROM suara_mmif WHERE calonketude2=1  AND created_at<='$tigajam'");
-            $calonketum1[]=mysqli_query($conn, "SELECT SUM(calonketum1) AS calonketum1 FROM suara_mmif WHERE calonketum1=1  AND created_at<='$tigajam'");
-            $calonketum2[]=mysqli_query($conn, "SELECT SUM(calonketum2) AS calonketum2 FROM suara_mmif WHERE calonketum2=1  AND created_at<='$tigajam'");
-        }
+        $NIM=$_SESSION['NIM'];
+        $sudah='sudah';
 
-        // echo '<br>';
-        $q1 = '';
-        $q2 = '';
-        $q3 = '';
-        $q4 = '';
-        
-        for($data=0; $data<$loop;$data++){
-            while($datas = mysqli_fetch_array($calonketude1[$data])) {
-                $q1 = $q1.$datas['calonketude1'].',';
-            }
-            while($datas = mysqli_fetch_array($calonketude2[$data])) {
-                $q2 = $q2.$datas['calonketude2'].',';
-            }
-            while($datas = mysqli_fetch_array($calonketum1[$data])) {
-                $q3 = $q3.$datas['calonketum1'].',';
-            }
-            while($datas = mysqli_fetch_array($calonketum2[$data])) {
-                $q4 = $q4.$datas['calonketum2'].',';
-            }
-
+        $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
+        $row = mysqli_fetch_assoc($result);
+        if($sudah == $row["ketum"] && $sudah == $row["ketude"]){
+            $selesai = "UPDATE mahasiswa SET submit_memilih='memilih' WHERE NIM = '$NIM'";
+            mysqli_query($conn, $selesai);
         }
-        // echo $q1.'data, pada jam: '. $tigajam;
-        // echo $q2.'data, pada jam: '. $tigajam;
-        // echo $q3.'data, pada jam: '. $tigajam;
-        // echo $q4.'data, pada jam: '. $tigajam;
     }
+
+    function memilih(){
+        global $conn;
+        $NIM=$_SESSION['NIM'];
+        $sudah='sudah';
+        
+        $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
+        $row = mysqli_fetch_assoc($result);
+        if($row["submit_memilih"]=="memilih" || $row["submit_tdkMemilih"]=="tidak memilih"){
+            $selesai = "UPDATE mahasiswa SET memilih='sudah' WHERE NIM = '$NIM'";
+            mysqli_query($conn, $selesai);
+        }
+    }
+
+    // function updateDataPemilih(){
+    //     global $conn;
+    //     global $tanggal;
+    //     $data_awal =$tanggal;
+    //     $loop = 16;
+    //     $calonketude1 = [];
+    //     $calonketude2 = [];
+    //     $calonketum1 = [];
+    //     $calonketum2 = [];
+        
+    //     for($data=0; $data<1000; $data+=1){
+    //         $perMenit = date('Y-m-d H:i:s', strtotime('+'.$data.'minutes',strtotime($data_awal)));
+    //         $memilih[]=mysqli_query($conn, "SELECT SUM(calonketude1) AS calonketude1 FROM suara_mmif WHERE calonketude1=1  AND created_at<='$perMenit'");
+    //         $belummemilih[]=mysqli_query($conn, "SELECT SUM(calonketude2) AS calonketude2 FROM suara_mmif WHERE calonketude2=1  AND created_at<='$perMenit'");
+    //     }
+
+    //     // echo '<br>';
+    //     $q1 = '';
+    //     $q2 = '';
+    //     $q3 = '';
+    //     $q4 = '';
+        
+    //     for($data=0; $data<$loop;$data++){
+    //         while($datas = mysqli_fetch_array($calonketude1[$data])) {
+    //             $q1 = $q1.$datas['calonketude1'].',';
+    //         }
+    //         while($datas = mysqli_fetch_array($calonketude2[$data])) {
+    //             $q2 = $q2.$datas['calonketude2'].',';
+    //         }
+    //         while($datas = mysqli_fetch_array($calonketum1[$data])) {
+    //             $q3 = $q3.$datas['calonketum1'].',';
+    //         }
+    //         while($datas = mysqli_fetch_array($calonketum2[$data])) {
+    //             $q4 = $q4.$datas['calonketum2'].',';
+    //         }
+
+    //     }
+    //     // echo $q1.'data, pada jam: '. $tigajam;
+    //     // echo $q2.'data, pada jam: '. $tigajam;
+    //     // echo $q3.'data, pada jam: '. $tigajam;
+    //     // echo $q4.'data, pada jam: '. $tigajam;
+    // }
+
+    // function grafik($q1, $q2, $q3, $q4){
+    //     global $tanggal;
+    //     //mengambl data setiap 6 jam
+    //     $data_awal =$tanggal;
+    //     $loop = 16;
+    //     $calonketude1 = [];
+    //     $calonketude2 = [];
+    //     $calonketum1 = [];
+    //     $calonketum2 = [];
+        
+    //     for($data=0; $data<$loop*6; $data+=6){
+    //         $enamjam = date('Y-m-d H:i:s', strtotime('+'.$data.'hours',strtotime($data_awal)));
+    //         $calonketude1[]=mysqli_query($conn, "SELECT SUM(calonketude1) AS calonketude1 FROM suara_mmif WHERE calonketude1=1  AND created_at<='$enamjam'");
+    //         $calonketude2[]=mysqli_query($conn, "SELECT SUM(calonketude2) AS calonketude2 FROM suara_mmif WHERE calonketude2=1  AND created_at<='$enamjam'");
+    //         $calonketum1[]=mysqli_query($conn, "SELECT SUM(calonketum1) AS calonketum1 FROM suara_mmif WHERE calonketum1=1  AND created_at<='$enamjam'");
+    //         $calonketum2[]=mysqli_query($conn, "SELECT SUM(calonketum2) AS calonketum2 FROM suara_mmif WHERE calonketum2=1  AND created_at<='$enamjam'");
+    //     }
+
+    //     // echo '<br>';
+    //     $q1 = '';
+    //     $q2 = '';
+    //     $q3 = '';
+    //     $q4 = '';
+        
+    //     for($data=0; $data<$loop;$data++){
+    //         while($datas = mysqli_fetch_array($calonketude1[$data])) {
+    //             $q1 = $q1.$datas['calonketude1'].',';
+    //         }
+    //         while($datas = mysqli_fetch_array($calonketude2[$data])) {
+    //             $q2 = $q2.$datas['calonketude2'].',';
+    //         }
+    //         while($datas = mysqli_fetch_array($calonketum1[$data])) {
+    //             $q3 = $q3.$datas['calonketum1'].',';
+    //         }
+    //         while($datas = mysqli_fetch_array($calonketum2[$data])) {
+    //             $q4 = $q4.$datas['calonketum2'].',';
+    //         }
+
+    //     }
+    //     // echo $q1.'data, pada jam: '. $tigajam;
+    //     // echo $q2.'data, pada jam: '. $tigajam;
+    //     // echo $q3.'data, pada jam: '. $tigajam;
+    //     // echo $q4.'data, pada jam: '. $tigajam;
+    // }
 
    
 
