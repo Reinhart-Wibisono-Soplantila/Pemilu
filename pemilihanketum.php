@@ -9,20 +9,30 @@
     }
     
     $NIM=$_SESSION['NIM'];
-    $sudah='sudah';
+    $memilih='memilih';
 
     if ( isset($_POST["calonketum1"])) {
-        echo "<script> alert('Anda memilih Kandidat Ketua Umum Pertama')</script>" ;
-        ketum1();
-        $update = "UPDATE mahasiswa SET ketum='sudah' WHERE NIM = '$NIM'";
-        mysqli_query($conn, $update);
-        header("Location: halamanutamapemilih.php");
+        if ($memilih == $rows["ketum"]){
+            header("Location: halamanutamapemilih.php");
+            exit;
+        } else {
+            echo "<script> alert('Anda memilih Kandidat Ketua Umum Pertama')</script>" ;
+            ketum1();
+            $update = "UPDATE mahasiswa SET ketum='memilih' WHERE NIM = '$NIM'";
+            mysqli_query($conn, $update);
+            header("Location: halamanutamapemilih.php");
+        }
     } elseif (isset($_POST["calonketum2"])) {
-        echo "<script> alert('Anda memilih Kandidat Ketua Umum Kedua')</script>" ;
-        ketum2();
-        $update = "UPDATE mahasiswa SET ketum='sudah' WHERE NIM = '$NIM'";
-        mysqli_query($conn, $update);
-        header("Location: halamanutamapemilih.php");
+        if ($memilih == $rows["ketum"]){
+            header("Location: halamanutamapemilih.php");
+            exit;
+        } else {
+            echo "<script> alert('Anda memilih Kandidat Ketua Umum Kedua')</script>" ;
+            ketum2();
+            $update = "UPDATE mahasiswa SET ketum='memilih' WHERE NIM = '$NIM'";
+            mysqli_query($conn, $update);
+            header("Location: halamanutamapemilih.php");
+        }
     }
 
     if(isset($_POST["logout"])){
