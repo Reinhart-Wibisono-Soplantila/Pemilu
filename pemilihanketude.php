@@ -10,21 +10,15 @@
     
     $NIM=$_SESSION['NIM']; 
     $sudah='sudah';
-    $key='indonesia';
-    
-    // if($_SESSION['calonketude1']===true){
-    //     echo " <scrit> alert('TRUE') </script>";
-    //     // header("Location: halamanutamapemilih.php");
-    // }
 
     if ( isset($_POST["calonketude1"])) {
-        echo "<script> alert('Anda memilih Kandidat Ketua Dewan Pertama')</script>" ;
+        echo "<script> alert('Anda Memilih Kandidat Ketua Dewan Pertama')</script>" ;
         ketude1();
         $update = "UPDATE mahasiswa SET ketude='sudah' WHERE NIM = '$NIM'";
         mysqli_query($conn, $update);
         header("Location: halamanutamapemilih.php");
     } elseif (isset($_POST["calonketude2"])) {
-        echo "<script> alert('Anda memilih Kandidat Ketua Dewan Kedua')</script>" ;
+        echo "<script> alert('Anda Memilih Kandidat Ketua Dewan Kedua')</script>" ;
         ketude2();
         $update = "UPDATE mahasiswa SET ketude='sudah' WHERE NIM = '$NIM'";
         mysqli_query($conn, $update);
