@@ -3,16 +3,16 @@ session_start();
     
 require 'function.php';
 
-// if(!isset($_SESSION["LOGIN"])){
-//     //set session
-//     header("Location: login.php");
-//     exit;
-// }
-// if( !isset($_SESSION["admin"])){
-//     //set session
-//     header("Location: login.php");
-//     exit;
-// }
+if(!isset($_SESSION["LOGIN"])){
+    //set session
+    header("Location: login.php");
+    exit;
+}
+if( !isset($_SESSION["admin"])){
+    //set session
+    header("Location: login.php");
+    exit;
+}
   
 $NIM=$_SESSION['NIM'];
 
@@ -135,25 +135,29 @@ if(isset($_POST["logout"])){
         <div class="container">
             <div class="row justify-content-center">
                 <div class="kotak ">
-                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa");
+                    <h1><?php $result = mysqli_query($conn, "SELECT SUM(calonketum1) AS calonketum1 FROM suara_mmif WHERE calonketum1=1");
                       // $row = mysqli_fetch_assoc($result);
-                      $row=mysqli_num_rows($result);
-                      echo $row;?></h1>
-                    <h3>Jumlah Pemilih Tetap</h3>
+                      $row=mysqli_fetch_assoc($result);
+                      echo $row["calonketum1"];?></h1>
+                    <h3>Perolehan Calon Pertama</h3>
                 </div>
                 <div class="kotak ">
-                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE ketum='sudah' AND submit_memilih='memilih' OR ketum='sudah' AND submit_tdkMemilih='tidak memilih'");
-                    // $row = mysqli_fetch_assoc($result);
-                    $row=mysqli_num_rows($result);
+                    <h1>
+                    <?php 
+                    $total1 = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE ketum='tidak memilih' AND memilih='memilih'");
+                    $row1 = mysqli_num_rows($total1);
+                    $total2 = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE ketum='memilih' AND memilih='memilih'");
+                    $row2 = mysqli_num_rows($total2);
+                    $row= intval($row1) + intval($row2);
                     echo $row;?></h1>
-                    <h3>Telah Memilih</h3>
+                    <h3>Total Suara</h3>
                 </div>
                 <div class="kotak ">
-                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE ketum=''");
+                    <h1><?php $result = mysqli_query($conn, "SELECT SUM(calonketum2) AS calonketum2 FROM suara_mmif WHERE calonketum2=1");
                     // $row = mysqli_fetch_assoc($result);
-                    $row=mysqli_num_rows($result);
-                    echo $row;?></h1>
-                    <h3>Belum Memilih</h3>
+                    $row=mysqli_fetch_assoc($result);
+                    echo $row["calonketum2"];?></h1>
+                    <h3>Perolehan Calon Kedua</h3>
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -165,21 +169,21 @@ if(isset($_POST["logout"])){
                     <h3>Jumlah Pemilih Tetap</h3>
                 </div>
                 <div class="kotak ">
-                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE submit_memilih='memilih'");
+                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE memilih='memilih'");
                     // $row = mysqli_fetch_assoc($result);
                     $row=mysqli_num_rows($result);
                     echo $row;?></h1>
                     <h3>Telah Memilih</h3>
                 </div>
                 <div class="kotak ">
-                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE ketum=''");
+                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE memilih=''");
                     // $row = mysqli_fetch_assoc($result);
                     $row=mysqli_num_rows($result);
                     echo $row;?></h1>
                     <h3>Belum Memilih</h3>
                 </div>
                 <div class="kotak ">
-                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE submit_tdkMemilih='tidak memilih'");
+                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE memilih='memilih' AND ketum='tidak memilih'");
                     // $row = mysqli_fetch_assoc($result);
                     $row=mysqli_num_rows($result);
                     echo $row;?></h1>
@@ -213,25 +217,27 @@ if(isset($_POST["logout"])){
         <div class="container">
             <div class="row justify-content-center">
                 <div class="kotak ">
-                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa");
+                    <h1><?php $result = mysqli_query($conn, "SELECT SUM(calonketude1) AS calonketude1 FROM suara_mmif WHERE calonketude1=1");
+                      $row=mysqli_fetch_assoc($result);
+                      echo $row["calonketude1"];?></h1>
+                    <h3>Perolehan Calon Pertama</h3>
+                </div>
+                <div class="kotak ">
+                    <h1><?php 
+                     $total1 = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE ketude='tidak memilih' AND memilih='memilih'");
+                     $row1 = mysqli_num_rows($total1);
+                     $total2 = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE ketude='memilih' AND memilih='memilih'");
+                     $row2 = mysqli_num_rows($total2);
+                     $row= intval($row1) + intval($row2);
+                    echo $row;?></h1>
+                    <h3>Total Suara</h3>
+                </div>
+                <div class="kotak ">
+                    <h1><?php $result = mysqli_query($conn, "SELECT SUM(calonketude2) AS calonketude2 FROM suara_mmif WHERE calonketude2=1");
                       // $row = mysqli_fetch_assoc($result);
-                      $row=mysqli_num_rows($result);
-                      echo $row;?></h1>
-                    <h3>Jumlah Pemilih Tetap</h3>
-                </div>
-                <div class="kotak ">
-                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE ketude='sudah' AND submit_memilih='memilih' OR ketude='sudah' AND submit_tdkMemilih='tidak memilih'");
-                    // $row = mysqli_fetch_assoc($result);
-                    $row=mysqli_num_rows($result);
-                    echo $row;?></h1>
-                    <h3>Telah Memilih</h3>
-                </div>
-                <div class="kotak ">
-                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE ketude=''");
-                    // $row = mysqli_fetch_assoc($result);
-                    $row=mysqli_num_rows($result);
-                    echo $row;?></h1>
-                    <h3>Belum Memilih</h3>
+                      $row=mysqli_fetch_assoc($result);
+                      echo $row["calonketude2"];?></h1>
+                    <h3>Perolehan Calon Kedua</h3>
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -243,21 +249,21 @@ if(isset($_POST["logout"])){
                     <h3>Jumlah Pemilih Tetap</h3>
                 </div>
                 <div class="kotak ">
-                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE submit_memilih='memilih'");
+                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE memilih='memilih'");
                     // $row = mysqli_fetch_assoc($result);
                     $row=mysqli_num_rows($result);
                     echo $row;?></h1>
                     <h3>Telah Memilih</h3>
                 </div>
                 <div class="kotak ">
-                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE ketude=''");
+                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE memilih=''");
                     // $row = mysqli_fetch_assoc($result);
                     $row=mysqli_num_rows($result);
                     echo $row;?></h1>
                     <h3>Belum Memilih</h3>
                 </div>
                 <div class="kotak ">
-                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE submit_tdkMemilih='tidak memilih'");
+                    <h1><?php $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE memilih='memilih' AND ketude='tidak memilih'");
                     // $row = mysqli_fetch_assoc($result);
                     $row=mysqli_num_rows($result);
                     echo $row;?></h1>
