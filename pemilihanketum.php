@@ -25,12 +25,6 @@
         header("Location: halamanutamapemilih.php");
     }
 
-    // if (isset($_SESSION['ketum1'])){
-    //     echo "<script> alert('BERHASIL KANDIDAT PERTAMA')</script>" ;
-    // } elseif (isset($_SESSION['ketum2'])){
-    //     echo "<script> alert('BERHASIL KANDIDAT KEDUA')</script>" ;
-    // }
-
     if(isset($_POST["logout"])){
         LogOut();
     }
@@ -82,7 +76,7 @@
         <section class="pilih-ketum">
             <div class="row justify-content-center">
                 <form action="" method="post">
-                    <button type="submit" name="calonketum1" class="btn btn-primary" onclick="return (confirm('Apakah anda yakin memilih Kadidat Ketua Dewan Pertama?'))">
+                    <button type="submit" name="calonketum1" class="btn btn-primary" onclick="return (confirm('Apakah anda yakin memilih Kadidat Ketua Umum Pertama?'))">
                         <div class="loader">
                             <div class="loading"></div>
                         </div>
