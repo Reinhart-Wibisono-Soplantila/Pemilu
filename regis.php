@@ -2,16 +2,20 @@
     require 'function.php';
     
     if (isset($_POST["regis"])){
-        $NIM = $_POST["NIM"];
-        $email_user = $_POST["email_sso"];
-        $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
-
-        if( mysqli_num_rows($result) === 1) {
-            $registrasi='sudah';
+        $stmt = mysqli_prepare($conn, "SELECT * FROM mahasiswa WHERE NIM= ? ");
+        mysqli_stmt_bind_param($stmt, "s", $_POST["NIM"]);
+        mysqli_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+        if( mysqli_stmt_num_rows($stmt) === 1) {
+            $result=get_result($stmt);
+            $data = array_shift($result);
+            $NIM = $data['NIM'];
+            $email_user=$data['email_sso'];
+            $registrasi='regis';
             $result = mysqli_query($conn, "SELECT registrasi FROM mahasiswa WHERE NIM='$NIM'");
             $regis =  mysqli_fetch_assoc($result);
             if($registrasi != $regis["registrasi"]){
-                $update = "UPDATE mahasiswa SET registrasi='sudah' WHERE NIM = '$NIM'";
+                $update = "UPDATE mahasiswa SET registrasi='regis' WHERE NIM = '$NIM'";
                 mysqli_query($conn, $update);
                 $result = mysqli_query($conn, "SELECT email_sso FROM mahasiswa WHERE NIM='$NIM'");
                 $email =  mysqli_fetch_assoc($result);
