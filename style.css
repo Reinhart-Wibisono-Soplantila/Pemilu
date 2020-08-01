@@ -114,7 +114,6 @@ ul li {
     display: flex;
     flex-direction: row;
     flex-flow: wrap;
-    margin-bottom: 10vh;
     margin-top: -10vh;
 }
 
@@ -179,7 +178,7 @@ ul li {
     margin-top: 10px;
     border-color: #00538e;
     border-radius: 10px;
-    width: 100px;
+    width: 150px;
 }
 
 
@@ -430,6 +429,9 @@ section.update-data-pemilih {
 
 /*Menu Pemilihan Ketum*/
 
+
+/*Menu Pemilihan Ketum*/
+
 .pilih-ketum {
     margin-bottom: 100px;
     margin-top: 110px;
@@ -459,7 +461,7 @@ section.update-data-pemilih {
     height: 130px;
     border-radius: 10px;
     box-sizing: border-box;
-    margin-left: -28px;
+    margin-left: -26px;
 }
 
 .pilih-ketum .topik-ketum {
@@ -638,7 +640,19 @@ section.update-data-pemilih {
     padding: 30px 20px;
 }
 
-.update-pemilih .tabel-pemilih {
+.generate h2 {
+    font-size: 20px;
+    margin-top: -7vh;
+    margin-bottom: 3vh;
+    text-align: center;
+}
+
+.generate .container {
+    padding: 30px 20px;
+}
+
+.update-pemilih .tabel-pemilih,
+.generate .tabel-pemilih {
     margin: 5% auto;
     padding: 3%;
     background-color: white;
@@ -650,7 +664,9 @@ section.update-data-pemilih {
 }
 
 .update-pemilih th,
-.update-pemilih td {
+.update-pemilih td,
+.generate th,
+.generate td {
     border: 1px solid lightgrey;
     font-size: 7px;
     width: 3%;
@@ -659,15 +675,18 @@ section.update-data-pemilih {
     text-align: center;
 }
 
-.update-pemilih th {
+.update-pemilih th,
+.generate th {
     background-color: #0095ff
 }
 
-.update-pemilih tr:nth-child(odd) {
+.update-pemilih tr:nth-child(odd),
+.generate tr:nth-child(odd) {
     background-color: whitesmoke;
 }
 
-.update-pemilih tr {
+.update-pemilih tr,
+.generate tr {
     background-color: white;
 }
 
@@ -683,7 +702,8 @@ section.update-data-pemilih {
     .update-data-pemilih h2,
     .selamat h2,
     .update h2,
-    .update-pemilih h2 {
+    .update-pemilih h2,
+    .generate h2 {
         font-size: 25px;
     }
     .selamat p,
@@ -740,11 +760,8 @@ section.update-data-pemilih {
         font-size: 17px;
     }
     .regis-form button {
-        font-size: 17px;
-        background-color: #00538e;
         margin-bottom: 1vh;
         margin-left: 50px;
-        width: 110px;
     }
     .icon-kandidat {
         margin-top: 20px;
@@ -777,14 +794,14 @@ section.update-data-pemilih {
     }
     .pilih-ketum button {
         border-radius: 20px;
-        width: 250px;
+        width: 270px;
     }
     .pilih-ketum .foto1,
     .pilih-ketum .foto2 {
         width: 250px;
         height: 250px;
         border-radius: 20px;
-        margin-left: -4px;
+        margin-left: 0;
     }
     .pilih-ketum .topik-ketum {
         width: 150px;
@@ -869,7 +886,9 @@ section.update-data-pemilih {
         margin-top: 10vh;
     }
     .update-pemilih th,
-    .update-pemilih td {
+    .update-pemilih td,
+    .generate th,
+    .generate td {
         font-size: small;
         padding-top: 10px;
         padding-bottom: 10px;
@@ -903,10 +922,12 @@ section.update-data-pemilih {
         background-color: #00538e;
     }
     .name,
-    .log-out,
     .add,
     .navbar .log-in {
         padding: 15px 25px;
+    }
+    .log-out {
+        padding: 10px 25px;
     }
     .update-data-pemilih .kotak {
         width: 130px;
@@ -940,9 +961,6 @@ section.update-data-pemilih {
     .pilih-ketum button {
         border-radius: 30px;
         width: 330px;
-    }
-    .pilih-ketum .foto2 {
-        margin-left: 0;
     }
     .pilih-ketum .foto1,
     .pilih-ketum .foto2 {
@@ -978,7 +996,8 @@ section.update-data-pemilih {
     .update-data-pemilih h2,
     .selamat h2,
     .update h2,
-    .update-pemilih h2 {
+    .update-pemilih h2,
+    .generate h2 {
         font-size: 35px;
     }
     .selamat p,
@@ -1117,7 +1136,9 @@ section.update-data-pemilih {
         margin-top: 10vh;
     }
     .update-pemilih th,
-    .update-pemilih td {
+    .update-pemilih td,
+    .generate th,
+    .generate td {
         font-size: smaller;
         padding-top: 15px;
         padding-bottom: 15px;
