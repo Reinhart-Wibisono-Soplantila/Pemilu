@@ -122,8 +122,6 @@
                         <th>No.</th>
                         <th>Nim</th>
                         <th>Nama</th>
-                        <th>Memilih Ketum</th>
-                        <th>Memilih Ketude</th>
                     </tr>
                     <?php $i = 1 ?>
                     <?php foreach($mahasiswa as $row) : ?>
@@ -136,8 +134,6 @@
                             
                             <td> <?php echo $row["NIM"]; ?> </td>
                             <td> <?php echo $row["nama"]; ?> </td>
-                            <td> <?php echo $row["ketum"]; ?> </td>
-                            <td> <?php echo $row["ketude"]; ?> </td>
                         </tr>
                         <?php $i++; ?>
                     <?php endforeach; ?>
