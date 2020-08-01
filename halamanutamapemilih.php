@@ -10,13 +10,13 @@
     }
     
     $NIM=$_SESSION['NIM'];
-    $sudah='sudah';
+    $memilih='memilih';
 
 
     if( isset($_POST["ketude"])){
       $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
       $row = mysqli_fetch_assoc($result);
-      if ($sudah == $row["ketude"]){
+      if ($memilih == $row["ketude"]){
         echo " <script> alert('hanya bisa memilih satu kali') </script>";
       } else {
         header("Location: pemilihanketude.php");
@@ -26,7 +26,7 @@
     if( isset($_POST["ketum"])){
       $result = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE NIM='$NIM'");
       $row = mysqli_fetch_assoc($result);
-      if ($sudah == $row["ketum"]){
+      if ($memilih == $row["ketum"]){
         echo " <script> alert('hanya bisa memilih satu kali') </script>";
       } else {
         header("Location: pemilihanketum.php");
@@ -47,12 +47,10 @@
     // }
 
     if(isset($_POST["SUBMIT"])){
-        
+        submit();
+        // memilih();
         suaraketum();
         suaraketude();
-        submitTidakMemilih();
-        submitMemilih();
-        memilih();
         LogOut();
     }
     
