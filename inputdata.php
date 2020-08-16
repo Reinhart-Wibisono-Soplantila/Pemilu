@@ -12,8 +12,8 @@
         exit;
     }
     $NIM=$_SESSION['NIM'];
-    
     $result = mysqli_query($conn, "SELECT * FROM admin");
+    
     if (isset($_POST["submit_ketum"])){
         // $kandidat_ketum1=$_POST["kandidat_ketum1"];
         // $kandidat_ketum2=$_POST["kandidat_ketum2"];
@@ -25,6 +25,11 @@
         // $kandidat_ketude1=$_POST["kandidat_ketude2"];
         inputNamaKetude($_POST);
         inputGambarKetude($_POST);
+    }
+    if( isset($_POST["submit_date"])){
+        $tanggal = $_POST["inputDate"];
+        echo $tanggal;
+        $result2 = mysqli_query($conn, "UPDATE admin SET nama='$tanggal' WHERE jabatan = 'tanggal'");
     }
 
     if(isset($_POST["logout"])){
@@ -117,6 +122,23 @@
                         </form>
                     </div>
                 </div>
+                <div class="row justify-content-center">
+                <div class="col">
+                    <div class="card">  
+                    <form id="dateWrapper" method="post" action="">
+                        <h4 class="font-weight-bold ">INPUT TANGGAL MULAI<br>PEMUNGUTAN SUARA</h4>
+                        <div class="form-group-date">
+                            <label for="exampleInputDate ">Tanggal dan Jam</label>
+                            <input type="text" class="form-control " id="exampleInputDate " placeholder="yyyy-mm-dd hh:mm:ss" name="inputDate">     
+                        </div> 
+                        <button class="button2 btn btn-primary" name="submit_date">
+                            <i class="loading-icon2 fa fa-spinner fa-spin hide"></i>
+                            <span class="btn-txt2">Submit</span>
+                        </button>
+                    </form>
+                </div>
+                <a href="admin.html" class="back"><button type="submit " class=" btn btn-primary ">Back to Home</button></a>
+            </div> 
             </div>
             <div class="row justify-content-center">
                 <div class="col">
@@ -182,7 +204,31 @@
         });
             });
         });
-
+        
+        $(document).ready(function() {
+            $('#dateWrapper').on('submit', function(){
+            let Data = $('#dateWrapper').serialize();
+            $.ajax({
+            type : 'POST',
+            url  : 'inputdata.php',
+            data : Data,
+            success: function(res){
+                if (res){
+                    $(".loading-icon2").removeClass("hide");
+                    // $(".button").attr("disabled", true);
+                    $(".btn-txt2").text("");
+                } else {
+                    setTimeout(function() {
+                        $(".loading-icon2").addClass("hide");
+                        // $(".button").attr("disabled", false);
+                        $(".btn-txt2").text("Submit");
+                    }, 3000);
+                }
+            }
+        });
+            });
+        });
+        
         $(document).ready(function() {
             $('#ketum').on('submit', function(){
             let Data = $('#ketum').serialize();

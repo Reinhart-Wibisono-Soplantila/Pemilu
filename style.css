@@ -27,6 +27,11 @@ body {
     padding: 10px;
     margin-left: 25px;
 }
+.input-form .button2 {
+    width: 100px;
+    padding: 10px;
+    
+}
 
 .button:disabled {
     opacity: 0.5;
@@ -570,6 +575,10 @@ section.update-data-pemilih {
     width: 250px;
 }
 
+.form-group-date input{
+    width: 250px;
+}
+
 .input-form button {
     margin-top: 10px;
     border-color: #00538e;
@@ -577,7 +586,7 @@ section.update-data-pemilih {
     background-color: #00538e;
     margin-bottom: 5vh;
     font-size: 12px;
-    margin-left: 25px;
+    
 }
 
 .input-form .log {
@@ -1097,6 +1106,7 @@ section.update-data-pemilih {
         margin-bottom: 1rem;
         width: 400px;
     }
+
     .input-form label {
         font-size: 15px;
     }
@@ -1144,7 +1154,13 @@ section.update-data-pemilih {
         padding-bottom: 15px;
     }
     .input-form .button,
-    .input-form .button1 {
+    .input-form .button1, .input-form .button2 {
         margin-left: 1px;
     }
+    
+
+    .form-group-date input{
+        width: 350px;
+    }
+
 }
